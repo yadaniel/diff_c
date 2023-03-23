@@ -1,0 +1,11 @@
+# format, compile and compare
+1) copy the current c code into -> current
+2) copy the prev c code into -> prev
+3) run ./_all.sh
+
+# format and compare only
+1) copy the current c code into -> current
+2) copy the prev c code into -> prev
+3) run ./_clang_fmt_all.sh
+
+
