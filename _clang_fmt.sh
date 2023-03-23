@@ -11,15 +11,17 @@ if [ ${CFILE} != "nofile" ]; then
 
     case ${CH} in
         c)
-            cpp -fpreprocessed -dD -E ${CFILE} | grep -v "^# [[:digit:]]" > ${TMP}.c__ && ./_clang_fmt.py ${TMP}.c__ > ${TMP}.c_ && \
+            cpp -fpreprocessed -dD -E ${CFILE} | grep -v "^# [[:digit:]]" > ${TMP}.c__ && ./_clang_fmt.py ${TMP}.c__ > ${TMP}.c___ && \
             # scc ${CFILE} > ${TMP}.c__ && ./_clang_fmt.py ${TMP}.c__ > ${TMP}.c_ && \
-            astyle --suffix=none --style=java --pad-oper --add-brackets --indent=spaces=4 --convert-tabs ${TMP}.c_ && rm -f ${TMP}.c__
+            clang-format --style llvm ${TMP}.c___ > ${TMP}.c_  && \
+            astyle --suffix=none --style=java --pad-oper --add-brackets --indent=spaces=4 --convert-tabs ${TMP}.c_ && rm -f ${TMP}.c__*
             ;;
         h)
             tabs 8
-            cpp -fpreprocessed -dD -E ${CFILE} | grep -v "^# [[:digit:]]" > ${TMP}.h__ && ./_clang_fmt.py ${TMP}.h__ > ${TMP}.h_ && \
+            cpp -fpreprocessed -dD -E ${CFILE} | grep -v "^# [[:digit:]]" > ${TMP}.h__ && ./_clang_fmt.py ${TMP}.h__ > ${TMP}.h___ && \
             # scc ${CFILE} > ${TMP}.h__ && ./_clang_fmt.py ${TMP}.h__ > ${TMP}.h_ && \
-            astyle --suffix=none --style=java --pad-oper --add-brackets --indent=spaces=8 --convert-tabs ${TMP}.h_ && rm -f ${TMP}.h__
+            clang-format --style llvm ${TMP}.h___ > ${TMP}.h_ && \
+            astyle --suffix=none --style=java --pad-oper --add-brackets --indent=spaces=8 --convert-tabs ${TMP}.h_ && rm -f ${TMP}.h__*
             ;;
         *)
             echo "file must be of type file.[c|h]"
